@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!-- Ajout du moteur de template Thymeleaf -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>TP ENI</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/tp-form.css">
+<link rel="icon" href="/images/logoENI.png">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+	<main class="container mt-5">
+		<div class="containerMovieForm">
+			<form data-th-action="@{/opinions/add}" data-th-object="${opinion}" method="post">
+				<h3 data-th-text="${'Ajouter un avis au film : ' + selectedMovie.title}"></h3>
+				<hr>
+				<ul class="flex-outer">
+				<li><label for="inputNote">Note : </label> 
+					<input type="number"  min="0" max="5" id="inputNote" class="form-control"  data-th-field="*{note}" required/></li>
+				<li><label for="taComment">Commentaire : </label> 
+					<textarea id="taComment" data-th-field="*{comment}" class="form-control" rows="3" required>
+					</textarea>
+				</li>
+				<li>
+					<button type="submit" class="btn btn-success mt-2">Enregistrer</button>
+				</li>
+				</ul>
+			</form>
+		</div>
+	</main>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

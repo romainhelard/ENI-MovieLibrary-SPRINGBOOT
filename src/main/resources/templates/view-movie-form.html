@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>TP ENI</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/tp-form.css">
+<link rel="stylesheet" href="/css/tp-error.css">
+<link rel="icon" href="/images/logoEni.png">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+	</header>
+	<main class="container mt-5">
+		<div class="containerMovieForm">
+			<form data-th-action="@{/movies/create}" data-th-object="${movie}"
+				method="post">
+				<h3>Création d'un film</h3>
+				<hr>
+				<!-- Affichage du message d'erreur général -->
+				<div class="cards" data-th-if="${#fields.hasErrors('*')}">
+					<h2>Veuillez vérifier vos champs</h2>
+				</div>
+				<div class="cards" data-th-if="${not #lists.isEmpty(be)}">
+					<span data-th-each="current : ${be}" data-th-text="${current}"></span>
+				</div>
+				<ul class="flex-outer">
+					<li><label for="inputTitle">Titre : </label> <input required
+						type="text" id="inputTitle" class="form-control" data-th-field="*{title}">
+						<!-- Affichage des messages d'erreur par champs -->
+						<div class="cards" data-th-if="${#fields.hasErrors('title')}">
+							<span data-th-errors="*{title}"></span>
+						</div>
+						</li>
+					<li><label for="inputYear">Année de sortie : </label> <input
+						required type="number" id="inputYear" class="form-control" data-th-field="*{year}" min="1900" max="2100">
+						<!-- Affichage des messages d'erreur par champs -->
+						<div class="cards" data-th-if="${#fields.hasErrors('year')}">
+							<span data-th-errors="*{year}"></span>
+						</div>
+						</li>
+	
+					<li><label for="selectDirector">Réalisateur : </label> <select
+						id="selectDirector" class="form-select" required data-th-field="*{director}">
+							<option data-th-each="current : ${movieParticipants}"
+								data-th-text="'- ' + ${current.firstName} + ' ' + ${current.lastName}" data-th-value="${current.id}"></option>
+					</select>
+					<!-- Affichage des messages d'erreur par champs -->
+						<div class="cards" data-th-if="${#fields.hasErrors('director')}">
+							<span data-th-errors="*{director}"></span>
+						</div>
+					</li>
+					<li><label for="inputDuration">Durée : </label> <input
+						type="number" id="inputDuration" class="form-control" data-th-field="*{duration}"
+						min="1">
+						<!-- Affichage des messages d'erreur par champs -->
+						<div class="cards" data-th-if="${#fields.hasErrors('duration')}">
+							<span data-th-errors="*{duration}"></span>
+						</div>
+						</li>
+	
+					<li><label for="inputGenre">Genre : </label> <select required
+						id="inputGenre" class="form-control" data-th-field="*{genre}">
+							<option data-th-each="genre : ${movieGenres}" data-th-text="${genre.label}" data-th-value="${genre.id}"></option>
+						</select>
+						<!-- Affichage des messages d'erreur par champs -->
+						<div class="cards" data-th-if="${#fields.hasErrors('genre')}">
+							<span data-th-errors="*{genre}"></span>
+						</div>
+						</li>
+	
+					<li><label for="taSynopsis">Synopsis : </label> <textarea
+							rows="3" id="taSynopsis" class="form-control" data-th-field="*{synopsis}"
+							maxlength="250">
+							</textarea>
+							<!-- Affichage des messages d'erreur par champs -->
+						<div class="cards" data-th-if="${#fields.hasErrors('synopsis')}">
+							<span data-th-errors="*{synopsis}"></span>
+						</div>
+							</li>
+	
+					<li><label
+						for="selectActors">Acteur(s) : </label> <select data-th-field="*{actors}"
+						id="selectActors" class="form-select" multiple>
+							<option data-th-each="current : ${movieParticipants}"
+								data-th-text="'- ' + ${current.firstName} + ' ' + ${current.lastName}" data-th-value="${current.id}"></option>
+					</select></li>
+					<li>
+						<button type="submit" class="btn btn-success mt-2">Enregistrer</button>
+					</li>
+				</ul>
+			</form>
+
+		</div>
+	</main>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

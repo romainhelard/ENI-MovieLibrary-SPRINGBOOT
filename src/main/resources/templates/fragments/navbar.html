@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Navbar Fragment</title>
+</head>
+<body>
+<!-- Navbar -->
+<div class="container-fluid mt-3" th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+        <div class="container-fluid">
+            <th:block data-th-if="${userSession == null}">
+                <a href="/" id="nav-title" class="navbar-brand" data-th-text="#{nav.h1}">
+                </a>
+                </th:block>
+                <th:block data-th-if="${userSession != null}">
+                <a href="/movies" id="nav-title" class="navbar-brand" data-th-text="#{nav.h1}"></a>
+                <span data-th-text="'['+ ${userSession.firstName}+']'" class="text-light"></span>
+            </th:block>
+            <div id="nav-title">
+                <a href="/?language=fr"><img alt="Français" src="/images/French.webp"></a>
+                <a href="/?language=en"><img alt="English" src="/images/English.webp"></a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="/movies"  class="nav-link active" aria-current="page" data-th-text="#{nav.movies}"></a>
+                </li>
+                <th:block
+                    data-th-if="${userSession != null} and ${userSession.isAdmin}">
+                    <li>
+                        <a href="/movies/create" class="nav-link active" aria-current="page" data-th-text="#{nav.movies.add}"></a>
+                    </li>
+                </th:block>
+                </ul>
+                <form class="d-flex gap-2">
+                <th:block data-th-if="${userSession == null}">
+                    <a href="/login"  data-th-text="#{nav.login}" class="btn btn-sm btn-outline-success btn-light"></a>
+                </th:block>
+                <th:block data-th-if="${userSession != null}">
+                <a href="/logout"  data-th-text="#{nav.logout}" class="btn btn-sm btn-outline-danger btn-light"></a>
+                </th:block>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>TP ENI</title>
+<link rel="stylesheet" href="/css/general.css">
+<link rel="stylesheet" href="/css/tp-table.css">
+<link rel="icon" href="/images/logoEni.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+	<main class="container mt-5">
+		<h3>
+			Les films de
+			<small class="text-muted">l'ENI</small>
+		</h3>
+		<hr>
+		<table class="table table-dark table-hover">
+			<thead>
+				<tr>
+					<th>Pochette</th>
+					<th>Genre</th>
+					<th>Année</th>
+					<th>Titre</th>
+					<th>Réalisateur</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-th-each="current :${movies}" class="table-light">
+					<td class="text-center"><img src="/images/hellokitty.png" class="avatar rounded-2" alt=""></td>
+					<td data-th-text="${current.genre.label}"></td>
+					<td data-th-text="${current.year}"></td>
+					<td data-th-text="${current.title}"></td>
+					<td
+						data-th-text="${current.director.firstName} + ' ' + ${current.director.lastName}">
+					</td>
+					<td>
+						<a data-th-href="@{/movies/detail(id=${current.id})}" class="btn btn-sm btn-secondary">Détail</a>
+						<!-- Ajout du lien pour donner son avis -->					
+						<a data-th-href="@{/opinions/add(id=${current.id})}" class="btn btn-sm btn-warning">Avis</a>
+						<!-- Ajout du lien pour supprimer le film si admin -->
+						<th:block data-th-if="${userSession != null} and ${userSession.isAdmin}">
+							<button class="btn btn-sm btn-danger" disabled>Supprimer</button>
+						</th:block>			
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
